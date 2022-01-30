@@ -33,30 +33,6 @@
         state: started
         daemon_reload: yes
 
-# remove Satan's bastard child snap (and snap packages)
-- block:
-    - name: remove snapd (1/3)
-      apt:
-        name: snapd
-        state: absent
-        autoremove: yes
-        purge: yes
-
-    - name: restrict snapd package from being installed (2/3)
-      copy:
-        dest: /etc/apt/preferences.d/nosnap.pref
-        src: etc/apt/preferences.d/nosnap.pref
-        owner: root
-        group: root
-        mode: '0644'
-
-    - name: install firefox deb package which was a snap package (3/3)
-      apt:
-        name: firefox
-        update_cache: yes
-        force_apt_get: yes
-  when: remove_snapd
-
 - name: enable ufw firewall but allow ssh
   ufw:
     rule: limit
@@ -76,7 +52,7 @@
 - name: tune system swappiness
   sysctl:
     name: vm.swappiness
-    value: '0'
+    value: '10'
     state: present
 
 - name: reduce space used by journald
@@ -91,49 +67,17 @@
     upgrade: dist
     force_apt_get: yes
 
-- name: install archiving tools
-  apt:
-    name: "{{ base_archiving_tools }}"
-    state: present
-    force_apt_get: yes
-
-- name: install productivity tools
-  apt:
-    name: "{{ base_productivity_tools }}"
-    state: present
-    force_apt_get: yes
-
-- name: install system tools
-  apt:
-    name: "{{ base_system_tools }}"
-    state: present
-    force_apt_get: yes
-
-- name: install system tools for laptop
-  apt:
-    name: "{{ base_system_tools_laptop }}"
-    state: present
-    force_apt_get: yes
-  when: laptop_mode
+      #- name: install system tools
+      #  apt:
+      #    name: "{{ base_system_tools }}"
+      #    state: present
+      #    force_apt_get: yes
 
 - name: install developer tools
   apt:
     name: "{{ base_developer_tools }}"
     state: present
     force_apt_get: yes
-
-# Fix for bat syntax highlighting tool; Ubuntu packages it as batcat instead of just bat
-- name: create symlink for bat
-  file:
-    src: /usr/bin/batcat
-    dest: /usr/bin/bat
-    state: link
-    force: no
-
-- name: set nc to point to nmap's netcat implementation
-  alternatives:
-    name: nc
-    path: /usr/bin/ncat
 
 - name: create .ssh dir
   file:
@@ -142,33 +86,6 @@
     mode: '0700'
   become: yes
   become_user: "{{ local_username }}"
-
-- block:
-    - name: Create directories for golang
-      file:
-        path: "~{{ local_username }}/{{ item }}"
-        state: directory
-      with_items:
-        - go
-        - go/src
-        - go/bin
-
-    - name: Make GOPATH available in .bashrc
-      lineinfile:
-        path: "~{{ local_username }}/.bashrc"
-        line: "{{ item }}"
-        create: yes
-      with_items:
-        - export GOPATH=$HOME/go
-        - export PATH=$PATH:$GOPATH/bin
-  become: yes
-  become_user: "{{ local_username }}"
-
-- name: install download tools
-  apt:
-    name: "{{ base_download_tools }}"
-    state: present
-    force_apt_get: yes
 
 - name: install media packages
   apt:
@@ -191,34 +108,6 @@
     groups:
       - docker
       - vboxusers
-
-#- name: install virtualbox extensions pack
-#  shell: echo 'y' | vboxmanage extpack install --replace /usr/share/virtualbox-ext-pack/Oracle*
-
-- block:
-    - name: install openssh-server package (1/2)
-      apt:
-        name: "{{ base_openssh_server.apt_package }}"
-        state: present
-        force_apt_get: yes
-    - name: enable and start ssh (2/2)
-      service:
-        name: "{{ base_openssh_server.service }}"
-        state: started
-        enabled: yes
-  when: not laptop_mode
-
-- name: Enable permanent night light settings
-  command: "gsettings set org.gnome.settings-daemon.plugins.color {{ item.key }} {{ item.value }}"
-  loop:
-    - { key: 'night-light-enabled', value: "{{ base_permanent_night_light.night_light_enabled | string | lower }}" }
-    - { key: 'night-light-schedule-automatic', value: "{{ base_permanent_night_light.night_light_schedule_automatic | string | lower }}" }
-    - { key: 'night-light-schedule-from', value: "{{ base_permanent_night_light.night_light_schedule_from }}" }
-    - { key: 'night-light-schedule-to', value: "{{ base_permanent_night_light.night_light_schedule_to }}" }
-    - { key: 'night-light-temperature', value: "{{ base_permanent_night_light.night_light_temperature }}" }
-
-  when: base_permanent_night_light.night_light_enabled
-  become_user: "{{ local_username }}"
 
 # make fstrim run daily rather than the default weekly schedule for SSD longevity
 - block:
