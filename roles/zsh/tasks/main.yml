@@ -6,9 +6,45 @@
     state: present
     force_apt_get: yes
 
-- name: change user's shell to zsh
+- name: clone oh-my-zsh 
+  tags:
+    # Suppress warning: [ANSIBLE0006] git used in place of git module
+    # Git module doesn't allow us to set `core.autocrlf=input`.
+    - skip_ansible_lint
+  become: yes
+  become_user: '{{ local_username }}'
+  # core.autocrlf=input prevents https://github.com/robbyrussell/oh-my-zsh/issues/4402
+  command: 'git clone -c core.autocrlf=input --depth=1 https://github.com/robbyrussell/oh-my-zsh.git .oh-my-zsh'
+  args:
+    chdir: '~{{ local_username }}'
+    creates: '~{{ local_username }}/.oh-my-zsh'
+
+- block:
+  - name: check if .zshrc exists in user's home dir
+    stat:
+      path: "~{{ local_username }}/.zshrc"
+    register: dotzshrc
+  - name: copy oh-my-zsh .zshrc template
+    copy:
+      src: '~{{ local_username }}/.oh-my-zsh/templates/zshrc.zsh-template'
+      dest: '~{{ local_username }}/.zshrc'
+    when: not dotzshrc.stat.exists
+
+
+- name: set permissions of oh-my-zsh
+  become: yes
+  file:
+    path: '~{{ local_username }}/.oh-my-zsh'
+    # Prevent the cloned repository from having insecure permissions. Failing to do
+    # so causes compinit() calls to fail with "command not found: compdef" errors
+    # for users with insecure umasks (e.g., "002", allowing group writability).
+    mode: 'go-w'
+    recurse: yes
+
+- name: set default shell for users
+  become: yes
   user:
-    name: "{{ local_username }}"
+    name: '{{ local_username }}'
     shell: /bin/zsh
 
 ...
