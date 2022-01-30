@@ -17,7 +17,6 @@ base_developer_tools:
   - xclip
   - vim-gtk3 # for clipboard supports
   - xsel 
-  - zsh
   - fd-find
   - fonts-font-awesome
   - fonts-powerline

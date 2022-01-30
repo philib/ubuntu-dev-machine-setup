@@ -1,8 +1,8 @@
 ---
 
-- name: install zsh and other related packages
+- name: install zsh 
   apt:
-    name: "{{ zsh_packages }}"
+    name: zsh
     state: present
     force_apt_get: yes
 
@@ -10,33 +10,5 @@
   user:
     name: "{{ local_username }}"
     shell: /bin/zsh
-
-- name: install antigen
-  git:
-    dest: "~{{ local_username }}/.antigen"
-    repo: "{{ zsh_antigen_url }}"
-    version: "{{ zsh_antigen_git_version }}"
-  become: yes
-  become_user: "{{ local_username }}"
-
-- block:
-    - name: check if .zshrc exists in user's home dir
-      stat:
-        path: "~{{ local_username }}/.zshrc"
-      register: dotzshrc
-
-    - name: backup .zshrc if it exists
-      copy:
-        src: "~{{ local_username }}/.zshrc"
-        dest: "~{{ local_username }}/.zshrc.orig"
-      when: dotzshrc.stat.exists
-
-    - name: copy the sample .zshrc file
-      copy:
-        src: .zshrc
-        dest: "~{{ local_username }}/.zshrc"
-        force: yes
-  become: yes
-  become_user: "{{ local_username }}"
 
 ...
