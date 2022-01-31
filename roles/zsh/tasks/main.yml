@@ -47,9 +47,4 @@
     name: '{{ local_username }}'
     shell: /bin/zsh
 
-- name: run zsh inside tmux
-  ansible.builtin.lineinfile:
-    path: '~{{ local_username }}/.zshrc'
-    line: if [ "$TMUX" = "" ]; then tmux; fi
-    create: no
 ...
