@@ -1,8 +1,8 @@
 ---
 
-- name: install zsh 
+- name: install terminal tools 
   apt:
-    name: zsh
+    name: "{{ terminal_tools }}"
     state: present
     force_apt_get: yes
 
@@ -47,4 +47,9 @@
     name: '{{ local_username }}'
     shell: /bin/zsh
 
+- name: run zsh inside tmux
+  ansible.builtin.lineinfile:
+    path: '~{{ local_username }}/.zshrc'
+    line: if [ "$TMUX" = "" ]; then tmux; fi
+    create: no
 ...

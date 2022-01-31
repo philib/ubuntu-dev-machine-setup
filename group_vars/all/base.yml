@@ -7,17 +7,14 @@ base_developer_tools:
   - ansible
   - ansible-lint
   - curl
-  - fzf
   - git
   - htop
   - nodejs
   - remmina
-  - ripgrep  # launch using rg from the cli
   - tmux
-  - xclip
   - vim-gtk3 # for clipboard supports
+  - xclip
   - xsel 
-  - fd-find
   - fonts-font-awesome
   - fonts-powerline
   - pavucontrol
