@@ -11,7 +11,6 @@ base_developer_tools:
   - htop
   - nodejs
   - remmina
-  - tmux
   - vim-gtk3 # for clipboard supports
   - xclip
   - xsel 
