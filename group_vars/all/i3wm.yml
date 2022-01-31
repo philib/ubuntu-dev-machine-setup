@@ -1,3 +1,11 @@
 ---
 
+i3wm_packages:
+  - i3
+  - i3blocks
+  - i3lock
+  - rofi
+  - feh
+  - arandr
+
 ...
