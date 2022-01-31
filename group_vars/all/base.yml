@@ -16,7 +16,6 @@ base_developer_tools:
   - xclip
   - xsel 
   - fonts-font-awesome
-  - fonts-powerline
   - pavucontrol
   - jq
 
