@@ -6,18 +6,25 @@
     state: present
     force_apt_get: yes
 
-- name: clone oh-my-zsh 
-  tags:
-    # Suppress warning: [ANSIBLE0006] git used in place of git module
-    # Git module doesn't allow us to set `core.autocrlf=input`.
-    - skip_ansible_lint
-  become: yes
-  become_user: '{{ local_username }}'
-  # core.autocrlf=input prevents https://github.com/robbyrussell/oh-my-zsh/issues/4402
-  command: 'git clone -c core.autocrlf=input --depth=1 https://github.com/robbyrussell/oh-my-zsh.git .oh-my-zsh'
-  args:
-    chdir: '~{{ local_username }}'
-    creates: '~{{ local_username }}/.oh-my-zsh'
+- name: install oh-my-zsh
+  block:
+  - name: check oh-my-zsh presence
+    stat:
+      path: '~{{ local_username }}/.oh-my-zsh'
+    register: dotohmyzsh
+  - name: clone oh-my-zsh 
+    when: not dotohmyzsh.stat.exists
+    tags:
+      # Suppress warning: [ANSIBLE0006] git used in place of git module
+      # Git module doesn't allow us to set `core.autocrlf=input`.
+      - skip_ansible_lint
+    become: yes
+    become_user: '{{ local_username }}'
+    # core.autocrlf=input prevents https://github.com/robbyrussell/oh-my-zsh/issues/4402
+    command: 'git clone -c core.autocrlf=input --depth=1 https://github.com/robbyrussell/oh-my-zsh.git .oh-my-zsh'
+    args:
+      chdir: '~{{ local_username }}'
+      creates: '~{{ local_username }}/.oh-my-zsh'
 
 - block:
   - name: check if .zshrc exists in user's home dir
