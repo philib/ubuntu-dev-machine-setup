@@ -1,0 +1,15 @@
+---
+- name: place layout
+  ansible.builtin.copy:
+    src: us-de-vim
+    dest: /usr/share/X11/xkb/symbols/us-de-vim
+- name: backup original and copy evdev.xml 
+  ansible.builtin.copy:
+    src: evdev.xml
+    dest: /usr/share/X11/xkb/rules
+    backup: yes
+- name: reload xkb data
+  shell: "dpkg-reconfigure xkb-data"
+- name: set layout
+  shell: "setxkbmap us-de-vim"
+

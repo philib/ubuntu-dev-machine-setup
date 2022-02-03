@@ -1,0 +1,22 @@
+default  partial alphanumeric_keys modifier_keys
+xkb_symbols "basic" {
+	include "us(basic)"
+	key <CAPS> { [ Escape ] };
+	key <ESC> { [ Caps_Lock ] };
+
+	key <AC01> {[ a,          A,          adiaeresis, Adiaeresis ]};
+	key <AD09> {[ o,          O,          odiaeresis, Odiaeresis ]};
+	key <AD07> {[ u,          U,          udiaeresis, Udiaeresis ]};
+	key <AE04> {[ 4, dollar, EuroSign]};
+
+	key <AC06> {[h, H, Left]};
+	key <AC07> {[j, J, Down]};
+	key <AC08> {[k, K, Up]};
+	key <AC09> {[l, L, Right]};
+
+	key <AD11>	{ [ bracketleft, braceleft, udiaeresis, Udiaeresis ] };
+	key <AC10>	{ [ semicolon, colon, odiaeresis, Odiaeresis ] };
+	key <AC11>	{ [ apostrophe, quotedbl, adiaeresis, Adiaeresis ] };
+	key <AE11>	{ [ minus, underscore, ssharp] };
+	include "level3(ralt_switch)"
+};
