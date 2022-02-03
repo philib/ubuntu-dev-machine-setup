@@ -17,6 +17,7 @@ base_developer_tools:
   - fonts-font-awesome
   - pavucontrol
   - jq
+  - chromium-browser
 
 base_virtualization_tools:
   - virtualbox
