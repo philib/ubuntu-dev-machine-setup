@@ -7,5 +7,7 @@ i3wm_packages:
   - rofi
   - feh
   - arandr
+  - dunst
+  - compton
 
 ...
