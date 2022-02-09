@@ -4,7 +4,7 @@
 - import_playbook: zsh.yml
 - import_playbook: ide.yml
 - import_playbook: i3wm.yml
-- import_playbook: dotfiles.yml
+- import_playbook: private-dotfiles.yml
 - import_playbook: keyboard.yml
 - import_playbook: post_install.yml
 ...
