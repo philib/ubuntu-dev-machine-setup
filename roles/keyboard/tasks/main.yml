@@ -10,6 +10,11 @@
     backup: yes
 - name: reload xkb data
   shell: "dpkg-reconfigure xkb-data"
-- name: set layout
+- name: set current layout
   shell: "setxkbmap us-de-vim"
+- name: persist layout
+  ansible.builtin.lineinfile:
+    path: /etc/default/keyboard
+    regexp: '^XKBLAYOUT='
+    line: XKBLAYOUT="us-de-vim"
 
