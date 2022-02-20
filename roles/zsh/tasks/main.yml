@@ -54,4 +54,24 @@
     name: '{{ local_username }}'
     shell: /bin/zsh
 
+- name: link fdfind to fd
+  block:
+  - name: create ~/.local/bin for fdfind
+    ansible.builtin.file:
+      path: '~{{ local_username }}/.local/bin'
+      state: directory
+      mode: '0755'
+  - name: get fdfind's location
+    command: which fdfind
+    register: fdfind
+  - name: symlink fdfind bin to fd bin
+    ansible.builtin.file:
+      src: "{{ fdfind.stdout | quote }}"
+      dest: '~{{ local_username }}/.local/bin/fd'
+      state: link
+      force: true
+  - name: add fd to PATH
+    shell: echo $PATH
+    environment:
+      PATH: '~{{ local_username }}/.local/bin/fd:{{ ansible_env.PATH}}'
 ...
