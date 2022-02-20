@@ -53,6 +53,18 @@
   user:
     name: '{{ local_username }}'
     shell: /bin/zsh
+- name: install latest fzf
+  block:
+  - name: check if fzf already installed
+    stat:
+      path: "~{{ local_username }}/.fzf"
+    register: dotfzf
+  - name: clone fzf repository
+    command: "git clone --depth 1 https://github.com/junegunn/fzf.git ~{{ local_username }}/.fzf"
+    when: not dotfzf.stat.exists
+  - name: install fzf
+    command: "~{{ local_username }}/.fzf/install"
+    when: not dotfzf.stat.exists
 
 - name: link fdfind to fd
   block:

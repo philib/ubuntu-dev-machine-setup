@@ -4,7 +4,6 @@ terminal_tools:
   - zsh
   - tmux
   - fonts-powerline # needed for tmux
-  - fzf
   - fd-find
   - ripgrep
 
