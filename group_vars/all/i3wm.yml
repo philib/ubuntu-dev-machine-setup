@@ -8,6 +8,5 @@ i3wm_packages:
   - feh
   - arandr
   - dunst
-  - compton
 
 ...
