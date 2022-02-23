@@ -137,4 +137,6 @@
       systemd:
         daemon_reload: yes
 
+- name: set chromium as default browser
+  command: xdg-settings set default-web-browser chromium-browser.desktop
 ...
