@@ -86,4 +86,7 @@
     shell: echo $PATH
     environment:
       PATH: '~{{ local_username }}/.local/bin/fd:{{ ansible_env.PATH}}'
+
+- name: install vim plugins
+  command: vim +'PlugInstall --sync' +qa
 ...
