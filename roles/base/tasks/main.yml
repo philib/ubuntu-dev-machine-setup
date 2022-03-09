@@ -139,4 +139,13 @@
 
 - name: set chromium as default browser
   command: xdg-settings set default-web-browser chromium-browser.desktop
+
+  # disable pulse audio auto mic boost (see https://nzeid.net/pulseaudio-disable-auto-volume)
+- block:
+    - name: backup alsamixer settings
+      command: 'cp -vR /usr/share/pulseaudio/alsa-mixer/paths /usr/share/pulseaudio/alsa-mixer/paths_backup'
+    - name: disable auto mic boost
+      command: 'perl -pi -0 -e "s/(\[[A-Za-z ]*Mic Boost\][A-Za-z._=\s-]+volume *= *)merge/\1zero/g;" /usr/share/pulseaudio/alsa-mixer/paths/*'
+
+
 ...
