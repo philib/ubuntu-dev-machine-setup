@@ -18,6 +18,7 @@ base_developer_tools:
   - pavucontrol
   - jq
   - chromium-browser
+  - v4l-utils # webcam utlity tool for disabling auto focus
 
 base_virtualization_tools:
   - virtualbox
