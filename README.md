@@ -45,6 +45,10 @@ Enter the sudo password when asked for `BECOME password:`.
 
 After all is done, give your laptop a new life by rebooting.
 
+## Further Steps
+
+- Login into jira using `jira login`
+
 ## Known Issues
 
 - If the ansible playbook halts after completing a few tasks, simply run the playbook again. Since most of the tasks are idempotent, running the playbook multiple times won't break anything.
