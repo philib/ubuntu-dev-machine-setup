@@ -99,4 +99,7 @@
       force_apt_get: yes
   - name: install terjira
     command: "gem install terjira"
+
+- name: install fzf-tab
+  command: "git clone https://github.com/Aloxaf/fzf-tab '{{ lookup('env', 'ZSH_CUSTOM') }}'/plugins/fzf-tab"
 ...
