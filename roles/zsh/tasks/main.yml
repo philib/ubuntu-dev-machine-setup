@@ -48,11 +48,26 @@
     mode: 'go-w'
     recurse: yes
 
-- name: set default shell for users
+- name: set default shell for users without ad
+  when: active_directory == false
   become: yes
   user:
     name: '{{ local_username }}'
     shell: /bin/zsh
+
+- name: set default shell for users with ad
+  when: active_directory 
+  block:
+    - name: change default shell
+      ansible.builtin.lineinfile:
+        path: /etc/sssd/sssd.conf
+        regexp: '^default_shell'
+        line: default_shell = /bin/zsh
+    - name: delete ss db
+      command: rm -rf /var/lib/sss/db/*
+    - name: restart sssd
+      command: systemctl restart sssd
+
 - name: install latest fzf
   block:
   - name: check if fzf already installed
