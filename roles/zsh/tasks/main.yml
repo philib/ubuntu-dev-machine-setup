@@ -102,4 +102,7 @@
 
 - name: install fzf-tab
   command: "git clone https://github.com/Aloxaf/fzf-tab '{{ lookup('env', 'ZSH_CUSTOM') }}'/plugins/fzf-tab"
+
+- name: install yarn-completion
+  command: "git clone https://github.com/buonomo/yarn-completion '{{ lookup('env', 'ZSH_CUSTOM') }}'/plugins/yarn-completion"
 ...
