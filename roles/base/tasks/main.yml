@@ -148,6 +148,7 @@
       command: 'perl -pi -0 -e "s/(\[[A-Za-z ]*Mic Boost\][A-Za-z._=\s-]+volume *= *)merge/\1zero/g;" /usr/share/pulseaudio/alsa-mixer/paths/*'
 
 - name: automatically log in
+  when: active_directory == false
   blockinfile:
     path: /etc/gdm3/custom.conf
     insertafter: '^#  AutomaticLogin ='
