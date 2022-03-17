@@ -156,4 +156,10 @@
       AutomaticLoginEnable = true
       AutomaticLogin = {{ local_username }}
 
+# lsusb | grep "Logitech" for vendor and product number 
+- name: disable logitech webcam autofocus when plugging in
+  copy:
+    src: 99-local-webcam.rules
+    dest: /etc/udev/rules.d
+   
 ...
