@@ -20,6 +20,7 @@ base_developer_tools:
   - chromium-browser
   - v4l-utils # webcam utlity tool for disabling auto focus
   - rdesktop
+  - peek # GIF screen recorder
 
 base_virtualization_tools:
   - virtualbox
