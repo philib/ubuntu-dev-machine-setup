@@ -21,6 +21,7 @@ base_developer_tools:
   - v4l-utils # webcam utlity tool for disabling auto focus
   - rdesktop
   - peek # GIF screen recorder
+  - flameshot # screen shot tool
 
 base_virtualization_tools:
   - virtualbox
