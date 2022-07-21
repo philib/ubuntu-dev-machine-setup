@@ -20,6 +20,7 @@ It installs:
 - TODO: VirtualBox for ansible testing purposes
 - TODO: spotify
 - TODO: signal
+- TODO: Noisetorch (get latest artefakt using this approach https://blog.markvincze.com/download-artifacts-from-a-latest-github-release-in-sh-and-powershell/#:~:text=Artifacts%20from%20this%20particular%20release,%2Fproject%2Freleases%2Flatest%20.)
 
 ## Step 0 | Pre-requisites for running the ansible playbooks
 
