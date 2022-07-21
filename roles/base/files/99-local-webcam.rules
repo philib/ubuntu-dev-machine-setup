@@ -1,1 +1,4 @@
-SUBSYSTEM=="video4linux", SUBSYSTEMS=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="08b6", PROGRAM="/usr/bin/v4l2-ctl --set-ctrl focus_auto=0 --device /dev/%k"
+# Auto-Focus
+SUBSYSTEM=="video4linux", SUBSYSTEMS=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="08b6", PROGRAM="/usr/bin/v4l2-ctl --device /dev/%k --set-ctrl focus_auto=0"
+# Camera perspective
+SUBSYSTEM=="video4linux", SUBSYSTEMS=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="08b6", PROGRAM="/usr/bin/v4l2-ctl --device /dev/%k --set-fmt-video=width=640,height=480,pixelformat=MJPG --set-ctrl zoom_absolute=127 --set-ctrl tilt_absolute=7200"
