@@ -116,19 +116,33 @@
     command: "gem install terjira"
 
 - name: install fzf-tab
-  command: "git clone https://github.com/Aloxaf/fzf-tab '{{ lookup('env', 'ZSH_CUSTOM') }}'/plugins/fzf-tab"
+  block:
+  - name: check fzf-tab presence
+    stat:
+      path: '~{{ local_username }}/.oh-my-zsh/plugins/fzf-tab'
+    register: fzftabplugin
+  - name: clone fzf-tab 
+    when: not fzftabplugin.stat.exists
+    command: "git clone https://github.com/Aloxaf/fzf-tab ~{{ local_username }}/.oh-my-zsh/plugins/fzf-tab"
 
 - name: install yarn-completion
-  command: "git clone https://github.com/buonomo/yarn-completion '{{ lookup('env', 'ZSH_CUSTOM') }}'/plugins/yarn-completion"
+  block:
+  - name: check yarn-completion presence
+    stat:
+      path: '~{{ local_username }}/.oh-my-zsh/plugins/yarn-completion'
+    register: yarncompletionplugin
+  - name: clone yarn-completion 
+    when: not yarncompletionplugin.stat.exists
+    command: "git clone https://github.com/buonomo/yarn-completion ~{{ local_username }}/.oh-my-zsh/plugins/yarn-completion"
 
 - name: install spaceship theme
   block: 
     - name: clone spaceship theme
-      command: "git clone https://github.com/spaceship-prompt/spaceship-prompt.git '{{ lookup('env', 'ZSH_CUSTOM') }}'/themes/spaceship2-prompt --depth=1"
+      command: "git clone https://github.com/spaceship-prompt/spaceship-prompt.git ~{{ local_username }}/.oh-my-zsh/custom/themes/spaceship2-prompt --depth=1"
     - name: symlink spaceship theme
       ansible.builtin.file:
-        src: "'{{ lookup('env', 'ZSH_CUSTOM') }}'/themes/spaceship2-prompt/spaceship.zsh-theme"
-        dest: "'{{ lookup('env', 'ZSH_CUSTOM') }}'/themes/spaceship2.zsh-theme"
+        src: "~{{ local_username }}/.oh-my-zsh/custom/themes/spaceship2-prompt/spaceship.zsh-theme"
+        dest: "~{{ local_username }}/.oh-my-zsh/custom/themes/spaceship2.zsh-theme"
         state: link
         force: true
 
