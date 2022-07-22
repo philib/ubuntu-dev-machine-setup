@@ -55,6 +55,7 @@ After all is done, give your laptop a new life by rebooting.
 - If the ansible playbook halts after completing a few tasks, simply run the playbook again. Since most of the tasks are idempotent, running the playbook multiple times won't break anything.
 - If your terminal shows any weird characters because of installing one of the zsh themes, simply change the font to a suitable Nerd Font from the terminal's settings.
 - If you are unable to install snapd and snap packages, remove the file `/etc/apt/preferences.d/nosnap.pref` (this is not a known issue but a feature)
+- If you get a black screen after logout, deactivate wayland in the (gdm3 config)[/etc/gdm3/custom.conf] see (here)[https://askubuntu.com/a/1079363]
 
 ---
 
