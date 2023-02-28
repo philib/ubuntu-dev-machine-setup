@@ -6,6 +6,13 @@
     state: present
     force_apt_get: yes
 
+- name: install kitty terminal emulator
+  block:
+  - name: install
+    become: yes
+    become_user: '{{ local_username }}'
+    command: 'curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin && ln -sf ~/.local/kitty.app/bin/kitty ~/.local/bin/'
+
 - name: install oh-my-zsh
   block:
   - name: check oh-my-zsh presence
